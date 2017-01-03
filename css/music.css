@@ -1,3 +1,10 @@
+@keyframes rotate-disk {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -96,11 +103,6 @@
     -webkit-transform: rotateZ(-25deg);
 }
 
-.resume-needle {
-    transform: rotateZ(0deg);
-    -webkit-transform: rotateZ(0deg);
-}
-
 .center-bg {
     width: 282px;
     height: 282px;
@@ -119,6 +121,11 @@
     left: 50%;
     top: 65px;
     margin: 0% -140px;
+
+    animation: rotate-disk 20s infinite normal linear;
+    animation-play-state: paused;
+    -webkit-animation: rotate-disk 20s infinite normal linear;
+    -webkit-animation-play-state: paused;
 }
 
 .center-song {
@@ -212,19 +219,19 @@
     margin: 0 10px 0 10px;
 }
 
-.footer-1, .footer-5 {
+.footer-loop, .footer-src {
     width: 32px;
     height: 32px;
     margin-bottom: 20px !important;
 }
 
-.footer-2, .footer-4 {
+.footer-prev, .footer-next {
     width: 50px;
     height: 50px;
     margin-bottom: 10px !important;
 }
 
-.footer-3 {
+.footer-play {
     width: 70px;
     height: 70px;
 }
