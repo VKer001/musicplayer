@@ -243,8 +243,15 @@
     height: 60%;
     max-height: 390px;
     margin: 0 auto;
-    /*bottom: 0px;*/
+    bottom: -100%;
     overflow: hidden;
+
+    transition: bottom 0.5s;
+    -webkit-transition: bottom 0.5s;
+}
+
+.musiclistActive {
+    bottom: 0px;
 }
 
 .play-list {

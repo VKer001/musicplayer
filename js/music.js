@@ -13,8 +13,6 @@
             $("#id-play-needle").addClass('pause-needle')
             $(".player-center").css("animation-play-state", "paused")
         }
-
-
     })
 
 
@@ -38,5 +36,24 @@
             $(".footer-love").attr("src","images/loved.png")
         } else {
             $(".footer-love").attr("src","images/love.png")
+        }
+    })
+
+    // musiceList
+    $("#id-img-src").on('click', function() {
+        $(".musicList").addClass("musiclistActive")
+    })
+
+    $(".footer").on('click', function() {
+        $(".musicList").removeClass("musiclistActive")
+    })
+
+    // 切换 musicList
+    $(".li-content").on("click", function() {
+        let liContent = $(".li-content").hasClass("li-active")
+        if (liContent == false) {
+
+        } else {
+            $(".li-content").addClass("li-active")
         }
     })
