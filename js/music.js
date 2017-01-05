@@ -49,11 +49,13 @@
     })
 
     // 切换 musicList
-    $(".li-content").on("click", function() {
-        let liContent = $(".li-content").hasClass("li-active")
-        if (liContent == false) {
+    $(".list-content").on("click", "li", function() {
+        if(!$(this).hasClass("li-active")) {
+            $('li').removeClass("li-active")
+            $('li').find("img").css('display', "none")
 
-        } else {
-            $(".li-content").addClass("li-active")
+            $(this).addClass("li-active")
+            $(this).find("img").css('display', "inline-block")
+        }else {
         }
     })

@@ -281,7 +281,7 @@
 }
 
 .song-play {
-    display: inline-block;
+    display: none;
     width: 17px;
     height: 15px;
     margin-right: 5px;
