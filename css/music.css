@@ -205,6 +205,10 @@
     text-align: center;
 }
 
+#id-audio-player {
+    display: inline-block;
+}
+
 .footer-player {
     position: absolute;
     text-align: center;
