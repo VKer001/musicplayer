@@ -26,7 +26,6 @@
             $("#id-play-needle").removeClass('pause-needle')
             $(".player-center").css("animation-play-state", "running")
             $("#id-audio-player")[0].play()
-            // console.log($("#id-audio-player")[0]);
         } else {
             $(".footer-play").attr("src","images/play.png")
             $("#id-play-needle").addClass('pause-needle')
@@ -38,20 +37,7 @@
     // 点击play按钮
     var playButton = function() {
         $(".footer-play").on('click', function() {
-            // 变化图标
-            let img = $(".footer-play").attr("src")
-            let play = "images/play.png"
-            if (img == play) {
-                $(".footer-play").attr("src","images/pause.png")
-                $("#id-play-needle").removeClass('pause-needle')
-                $(".player-center").css("animation-play-state", "running")
-                $("#id-audio-player")[0].play()
-            } else {
-                $(".footer-play").attr("src","images/play.png")
-                $("#id-play-needle").addClass('pause-needle')
-                $(".player-center").css("animation-play-state", "paused")
-                $("#id-audio-player")[0].pause()
-            }
+            turnCenter()
         })
     }
 
@@ -62,12 +48,13 @@
             let loop = "images/loop.png"
             if (img == loop) {
                 $(".footer-loop").attr("src","images/cyclic.png")
+                $('#id-audio-player')[0].loop = true
             } else {
                 $(".footer-loop").attr("src","images/loop.png")
+                // $('#id-audio-player')[0].loop = true
             }
         })
     }
-
 
     // love 切换
     var loveButton = function() {
@@ -82,9 +69,8 @@
         })
     }
 
-
     // musiceList
-    var musiclistEvent = function() {
+    var musiclistClass = function() {
         // musiceList出现
         $("#id-img-src").on('click', function() {
             $(".musicList").addClass("musiclistActive")
@@ -98,42 +84,69 @@
 
 
     // 切换 musicList
-    $(".list-content").on("click", "li", function() {
-        if(!$(this).hasClass("li-active")) {
-            $('li').removeClass("li-active")
-            $('li').find("img").css('display', "none")
+    var musiclistEvent = function() {
+        $(".list-content").on("click", "li", function() {
+            if(!$(this).hasClass("li-active")) {
+                $('li').removeClass("li-active")
+                $('li').find("img").css('display', "none")
 
-            $(this).addClass("li-active")
-            $(this).find("img").css('display', "inline-block")
-        }else {
-        }
-    })
+                $(this).addClass("li-active")
+                $(this).find("img").css('display', "inline-block")
+
+                // console.log($(this).index());
+                let i = $(this).index()
+                changeMusic(i)
+            }
+        })
+    }
 
     // 切歌、切背景等
-    var changeMusic = function(offset) {
-        let activeIndex = $(".vker-src-active").data('active')
-        let numberOfMic = $('.vker-src-active').data('mic')
-        let i = (activeIndex + numberOfMic + offset) % numberOfMic
+    var changeMusic = function(i) {
         let source = $($('source')[i]).attr('src')
-        console.log('source', source, $('source'), $('source')[i], $($('source')[i]));
+        // console.log('source', source, $('source'), $('source')[i], $($('source')[i]));
+        // console.log(activeIndex,numberOfMic);
+        // console.log('i', i);
         $('.vker-src-active').data('active', i)
         $('#id-audio-player')[0].src = source
-        $('#id-audio-player')[0].autoplay = true
-        turnCenter()
+        if ($(".footer-play").attr("src","images/play.png")) {
+            turnCenter()
+        } else {
+            $('#id-audio-player')[0].autoplay = true
+        }
+        // 改变musicname
         let len = source.length
         let newsourse1 = source.slice(6, sliceName(source))
         let newsourse2 = source.slice(sliceName(source)+1, len-4)
-        console.log(newsourse1,newsourse2);
+        // console.log(newsourse1,newsourse2);
         $('.song').text(newsourse2)
         $('.artist').text(newsourse1)
 
+        $("#id-img-musicBg")[0].src = musicBgimg[i]
+        $(".center-song")[0].src = musicBgimg[i]
+
+        // 改变musicList
+        $('li').removeClass("li-active")
+        $('li').find("img").css('display', "none")
+
+        $($("li")[i]).addClass("li-active")
+        $($("li")[i]).find("img").css('display', "inline-block")
+
+        // 重置 player-center
+        $("#id-player-center").toggleClass("player-center-new", "player-center")
+    }
+
+    var dataChange = function(offset) {
+        let activeIndex = $(".vker-src-active").data('active')
+        let numberOfMic = $('.vker-src-active').data('mic')
+        let i = (activeIndex + numberOfMic + offset) % numberOfMic
+        changeMusic(i)
     }
 
     var playPrev = function() {
-        changeMusic(-1)
+        dataChange(-1)
     }
     var playNext = function() {
-        changeMusic(1)
+        dataChange(1)
     }
 
     var playEvent = function() {
@@ -171,8 +184,9 @@
         })
         // 音乐播放完了之后的事件
         $("#id-audio-player").on('ended', function(){
+            console.log("播放结束");
             // 根据按钮样式来播放下一首
-            if ($(".footer-loop").attr("src","images/loop.png")) {
+            if ($(".footer-loop").attr("src","images/cyclic.png")) {
                 console.log('循环');
                 $('#id-audio-player')[0].loop = true
             } else {
@@ -199,11 +213,18 @@
         })
     }
 
+    var musicBgimg = [
+        "images/cd.jpg",
+        "images/nfgn.jpg",
+        "images/gbqq.jpg",
+    ]
+
     var _main = function() {
         playButton()
         loopButton()
         loveButton()
         playEvent()
+        musiclistClass()
         musiclistEvent()
         bindAudioEvents()
         bindProcess()

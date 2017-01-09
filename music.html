@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="musicBg">
-            <img src="images/cd.jpg" alt="" />
+            <img id="id-img-musicBg" src="images/cd.jpg" alt="" />
             <div class="bgCover"></div>
         </div>
 
@@ -26,7 +26,7 @@
         <div class="musicPlayer">
             <img class="play-needle pause-needle" id="id-play-needle" src="images/play_needle.png"/>
             <div class="center-bg"></div>
-            <div class="player-center">
+            <div class="player-center" id="id-player-center">
                 <img class="center-song" src="images/cd.jpg" alt="" />
                 <img class="center-border" src="images/center_border.png"/>
             </div>
@@ -73,17 +73,17 @@
                 <div class="list-title">播放列表（<span id="playListCount">3</span>）</div>
             </div>
             <ul class="list-content" id="listContent">
-                <li class="li-active" id="id-li-1">
+                <li class="li-active">
                     <img style="display:inline-block;" class="song-play song-active" src="images/song_play.png" alt="" />
                     <span>成都 - 赵雷</span>
                 </li>
-                <li id="id-li-2">
-                    <img class="song-play" src="images/song_play.png" alt="" />
-                    <span>告白气球 - 周二珂</span>
-                </li>
-                <li id="id-li-3">
+                <li>
                     <img class="song-play" src="images/song_play.png" alt="" />
                     <span>南方姑娘 - 赵雷</span>
+                </li>
+                <li>
+                    <img class="song-play" src="images/song_play.png" alt="" />
+                    <span>告白气球 - 周二珂</span>
                 </li>
             </ul>
         </div>

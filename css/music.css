@@ -4,6 +4,11 @@
     }
 }
 
+@keyframes rotate-disk-new {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
 
 * {
     margin: 0;
@@ -125,6 +130,20 @@
     animation: rotate-disk 20s infinite normal linear;
     animation-play-state: paused;
     -webkit-animation: rotate-disk 20s infinite normal linear;
+    -webkit-animation-play-state: paused;
+}
+
+.player-center-new {
+    width: 280px;
+    height: 280px;
+    position: absolute;
+    left: 50%;
+    top: 65px;
+    margin: 0% -140px;
+
+    animation: rotate-disk-new 20s infinite normal linear;
+    animation-play-state: paused;
+    -webkit-animation: rotate-disk-new 20s infinite normal linear;
     -webkit-animation-play-state: paused;
 }
 
