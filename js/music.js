@@ -181,6 +181,8 @@
             // 设置当前时间 time
             let time = labelFromTime(player.currentTime)
             $('.timelist-start').text(time)
+
+            // console.log("offset", $(this).offset().right);
         })
         // 音乐播放完了之后的事件
         $("#id-audio-player").on('ended', function(){
@@ -208,8 +210,33 @@
 
     // 监听process拖动
     var bindProcess = function() {
-        $("#id-img-process").on('mousedown touchstart', function() {
-            console.log('yidong');
+        // let player = $('#id-audio-player')[0]
+        // let value = player.currentTime / player.duration
+        // let v = value * 254.55
+        // let m = v - 11
+        // // console.log(v);
+        // $('.timelist-ing').css('width', v)
+        // $("#id-img-process").css('margin-left', m)
+        // // 设置当前时间 time
+        // let time = labelFromTime(player.currentTime)
+        // $('.timelist-start').text(time)
+        $("#id-img-process").on({
+            mousedown: function(e){
+                        $(".timelist-ing").on('mousemove.drag', function(e){ $(this).offset({left: $(this).offset().left}); });
+                        console.log("e.pageX-dx",$(this).offset().left, typeof $(this).offset().left);
+                        let m = $(this).offset().left - 254.55 - 11
+                        console.log("m", m);
+                        $("#id-img-process").css('margin-left', m)
+                    },
+            mouseup: function(e){
+                // let el=$(this)
+                // let os = el.offset()
+                // let dx = e.clientX-os.left
+                // $(".timelist-ing").off('mousemove.drag');
+                // console.log("e.pageX-dx",e.clientX-dx);
+            }
+        // let eventMouse =
+        // let moveX =
         })
     }
 
