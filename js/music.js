@@ -1,5 +1,5 @@
     // 根据 "-" 切割字符串
-    var sliceName = function(name) {
+    const sliceName = function(name) {
         for (var i = 0; i < name.length; i++) {
             if (name[i] == '-') {
                 return i
@@ -8,7 +8,7 @@
     }
 
     // 补全时间
-    var zfill = function(time) {
+    const zfill = function(time) {
         if (time.length<2) {
             return "0" + time
         } else {
@@ -17,7 +17,7 @@
     }
 
     // 根据 播放或暂停
-    var turnCenter = function() {
+    const turnCenter = function() {
         // 变化图标
         let img = $(".footer-play").attr("src")
         let play = "images/play.png"
@@ -35,29 +35,29 @@
     }
 
     // 点击play按钮
-    var playButton = function() {
+    const playButton = function() {
         $(".footer-play").on('click', function() {
             turnCenter()
         })
     }
 
     // 循环切换
-    var loopButton = function() {
+    const loopButton = function() {
         $(".footer-loop").on('click', function() {
             let img = $(".footer-loop").attr("src")
-            let loop = "images/loop.png"
+            let loop = "images/onebyone.png"
             if (img == loop) {
                 $(".footer-loop").attr("src","images/cyclic.png")
                 $('#id-audio-player')[0].loop = true
             } else {
-                $(".footer-loop").attr("src","images/loop.png")
-                // $('#id-audio-player')[0].loop = true
+                $(".footer-loop").attr("src","images/onebyone.png")
+                $('#id-audio-player')[0].loop = false
             }
         })
     }
 
     // love 切换
-    var loveButton = function() {
+    const loveButton = function() {
         $(".footer-love").on('click', function() {
             let img = $(".footer-love").attr("src")
             let love = "images/love.png"
@@ -70,7 +70,7 @@
     }
 
     // musiceList
-    var musiclistClass = function() {
+    const musiclistClass = function() {
         // musiceList出现
         $("#id-img-src").on('click', function() {
             $(".musicList").addClass("musiclistActive")
@@ -84,7 +84,7 @@
 
 
     // 切换 musicList
-    var musiclistEvent = function() {
+    const musiclistEvent = function() {
         $(".list-content").on("click", "li", function() {
             if(!$(this).hasClass("li-active")) {
                 $('li').removeClass("li-active")
@@ -101,7 +101,7 @@
     }
 
     // 切歌、切背景等
-    var changeMusic = function(i) {
+    const changeMusic = function(i) {
         let source = $($('source')[i]).attr('src')
         // console.log('source', source, $('source'), $('source')[i], $($('source')[i]));
         // console.log(activeIndex,numberOfMic);
@@ -135,21 +135,21 @@
         $("#id-player-center").toggleClass("player-center-new", "player-center")
     }
 
-    var dataChange = function(offset) {
+    const dataChange = function(offset) {
         let activeIndex = $(".vker-src-active").data('active')
         let numberOfMic = $('.vker-src-active').data('mic')
         let i = (activeIndex + numberOfMic + offset) % numberOfMic
         changeMusic(i)
     }
 
-    var playPrev = function() {
+    const playPrev = function() {
         dataChange(-1)
     }
-    var playNext = function() {
+    const playNext = function() {
         dataChange(1)
     }
 
-    var playEvent = function() {
+    const playEvent = function() {
         $('.footer-prev').on('click', function(){
             playPrev()
         })
@@ -159,7 +159,7 @@
     }
 
     // 时间函数
-    var labelFromTime = function(time) {
+    const labelFromTime = function(time) {
         let minutes = zfill(String(Math.floor(time / 60)))
         // console.log(Math.floor(time / 60));
         let seconds = zfill(String(Math.floor(time % 60)))
@@ -169,7 +169,7 @@
     }
 
     // 监听播放时间 改变滑条
-    var bindAudioEvents = function() {
+    const bindAudioEvents = function() {
         $('#id-audio-player').on('timeupdate', function(e){
             let player = $('#id-audio-player')[0]
             let value = player.currentTime / player.duration
@@ -181,21 +181,22 @@
             // 设置当前时间 time
             let time = labelFromTime(player.currentTime)
             $('.timelist-start').text(time)
-
-            // console.log("offset", $(this).offset().right);
         })
         // 音乐播放完了之后的事件
         $("#id-audio-player").on('ended', function(){
-            console.log("播放结束");
+            // console.log("播放结束");
             // 根据按钮样式来播放下一首
-            if ($(".footer-loop").attr("src","images/cyclic.png")) {
-                console.log('循环');
-                $('#id-audio-player')[0].loop = true
-            } else {
-                console.log('下一首')
+            let img = $(".footer-loop").attr("src")
+            let loop = "images/onebyone.png"
+            if (img == loop) {
+                // console.log('下一首');
                 playNext()
+            } else {
+                // console.log('循环');
+                $('#id-audio-player')[0].loop = true
             }
         })
+
         // 加载音乐后的事件
         $('#id-audio-player').on('canplay', function(e){
             let player = e.target
@@ -208,45 +209,44 @@
         })
     }
 
-    // 监听process拖动
-    var bindProcess = function() {
-        // let player = $('#id-audio-player')[0]
-        // let value = player.currentTime / player.duration
-        // let v = value * 254.55
-        // let m = v - 11
-        // // console.log(v);
-        // $('.timelist-ing').css('width', v)
-        // $("#id-img-process").css('margin-left', m)
-        // // 设置当前时间 time
-        // let time = labelFromTime(player.currentTime)
-        // $('.timelist-start').text(time)
-        $("#id-img-process").on({
-            mousedown: function(e){
-                        $(".timelist-ing").on('mousemove.drag', function(e){ $(this).offset({left: $(this).offset().left}); });
-                        console.log("e.pageX-dx",$(this).offset().left, typeof $(this).offset().left);
-                        let m = $(this).offset().left - 254.55 - 11
-                        console.log("m", m);
-                        $("#id-img-process").css('margin-left', m)
-                    },
-            mouseup: function(e){
-                // let el=$(this)
-                // let os = el.offset()
-                // let dx = e.clientX-os.left
-                // $(".timelist-ing").off('mousemove.drag');
-                // console.log("e.pageX-dx",e.clientX-dx);
-            }
-        // let eventMouse =
-        // let moveX =
+    // 监听process click
+    const bindProcess = function() {
+        $('.timelist-slider').on('input', function(e){
+            let target = $(e.target)
+            // console.log(target);
+            let sWidth = target.css('width')
+            let sLen = parseInt(sWidth)
+            // console.log(sLen);
+            let max = target.attr('max')
+            let divLen = sLen * (target.val() / max)
+            // console.log('divLen', divLen)
+            $('.timelist-ing').css('width', divLen)
+            $('#id-img-process').css('margin-left', divLen-11)
+
+            let processIng = divLen / sLen
+            // console.log("processIng",processIng);
+            let player = $('#id-audio-player')[0]
+            player.currentTime = player.duration * processIng
         })
     }
 
-    var musicBgimg = [
+    // 监听空格 播放 与 暂停
+    const bindSpace = function() {
+        $(document).keydown(function(e){
+            if(!e) var e = window.event;
+            if(e.keyCode==32){
+                turnCenter()
+            }
+        })
+    }
+
+    const musicBgimg = [
         "images/cd.jpg",
         "images/nfgn.jpg",
         "images/gbqq.jpg",
     ]
 
-    var _main = function() {
+    const _main = function() {
         playButton()
         loopButton()
         loveButton()
@@ -255,6 +255,7 @@
         musiclistEvent()
         bindAudioEvents()
         bindProcess()
+        bindSpace()
     }
 
     _main()

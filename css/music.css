@@ -4,6 +4,11 @@
     }
 }
 
+@keyframes rotate-disk-new {
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
 
 * {
     margin: 0;
@@ -128,6 +133,20 @@
     -webkit-animation-play-state: paused;
 }
 
+.player-center-new {
+    width: 280px;
+    height: 280px;
+    position: absolute;
+    left: 50%;
+    top: 65px;
+    margin: 0% -140px;
+
+    animation: rotate-disk-new 20s infinite normal linear;
+    animation-play-state: paused;
+    -webkit-animation: rotate-disk-new 20s infinite normal linear;
+    -webkit-animation-play-state: paused;
+}
+
 .center-song {
     border-radius: 50%;
     width: 68%;
@@ -177,6 +196,15 @@
 .timelist-bg {
     background-color: #B1ADAC;
     height: 2px;
+}
+
+.timelist-slider {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
 }
 
 .timelist-ing{
