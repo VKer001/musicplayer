@@ -1,3 +1,10 @@
+    // 阻止手机端页面滑动
+    document.ontouchmove = function (event) {
+        if (!event.elementIsEnabled) {
+            event.preventDefault()
+        }
+    }
+
     // 根据 "-" 切割字符串
     const sliceName = function(name) {
         for (var i = 0; i < name.length; i++) {
