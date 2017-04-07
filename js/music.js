@@ -107,23 +107,38 @@
         })
     }
 
+    const musicUrl = [
+        'http://m2.music.126.net/Wt9SMxh0A6C671Y8IlkPYg==/18776360069257501.mp3',
+        'http://m2.music.126.net/NCb371nCQFvwYWpDE7-jHA==/3402988500870657.mp3',
+        'http://m2.music.126.net/gQDmHxjY_gAtRE-RKqDQJw==/1413971968361530.mp3',
+    ]
+
     // 切歌、切背景等
     const changeMusic = function(i) {
-        let source = $($('source')[i]).attr('src')
+        console.log(i);
+        // let source = $($('source')[i]).attr('src')
         // console.log('source', source, $('source'), $('source')[i], $($('source')[i]));
         // console.log(activeIndex,numberOfMic);
         // console.log('i', i);
         $('.vker-src-active').data('active', i)
-        $('#id-audio-player')[0].src = source
+        $('#id-audio-player')[0].src = musicUrl[i]
         if ($(".footer-play").attr("src","images/play.png")) {
             turnCenter()
         } else {
             $('#id-audio-player')[0].autoplay = true
         }
         // 改变musicname
-        let len = source.length
-        let newsourse1 = source.slice(6, sliceName(source))
-        let newsourse2 = source.slice(sliceName(source)+1, len-4)
+        // let len = source.length
+        // let newsourse1 = source.slice(6, sliceName(source))
+        // let newsourse2 = source.slice(sliceName(source)+1, len-4)
+        if (i == 1) {
+            var newsourse2 = '南方姑娘'
+        } else if (i == 2) {
+            var newsourse2 = '理想'
+        } else if (i == 3) {
+            var newsourse2 = '成都'
+        }
+        let newsourse1 = '赵雷'
         // console.log(newsourse1,newsourse2);
         $('.song').text(newsourse2)
         $('.artist').text(newsourse1)
@@ -250,7 +265,7 @@
     const musicBgimg = [
         "images/cd.jpg",
         "images/nfgn.jpg",
-        "images/gbqq.jpg",
+        "images/lx.jpg",
     ]
 
     const _main = function() {
